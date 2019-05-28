@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ricardosernam.tienda.R;
 import com.example.ricardosernam.tienda.ventas.Productos.modificarProducto_DialogFragment;
@@ -73,7 +74,7 @@ public class Empleados_ventasAdapter extends RecyclerView.Adapter <Empleados_ven
         holder.nombre.setText(itemsEmpleados.get(position).getNombre());
         holder.puesto.setText(String.valueOf(itemsEmpleados.get(position).getPuesto()));
 
-        if(itemsEmpleados.get(position).getActivo()==1){
+        if(itemsEmpleados.get(position).getActivo()==1){   ////Aquí
             holder.activo.setButtonTintList(ColorStateList.valueOf(verde));
         }
         else{
