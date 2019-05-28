@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +23,10 @@ import com.example.ricardosernam.tienda.MainActivity;
 import com.example.ricardosernam.tienda._____interfazes.actualizado;
 import com.example.ricardosernam.tienda.provider.ContractParaProductos;
 import com.example.ricardosernam.tienda.R;
-import com.example.ricardosernam.tienda.sync.SyncAdapter;
-import com.example.ricardosernam.tienda.utils.Constantes;
 import com.example.ricardosernam.tienda.ventas.Ventas;
 
 import java.text.SimpleDateFormat;
 
-import static com.example.ricardosernam.tienda.Empleados.Empleados.recycler;
 import static com.example.ricardosernam.tienda.Empleados.Empleados.relleno;
 
 @SuppressLint("ValidFragment")
@@ -193,10 +188,6 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
         values2.put("hora_inicio", formattedDate);
         values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.insertOrThrow("turnos", null, values2);
-        if(Empleados.online.isChecked()){
-            SyncAdapter.sincronizarAhora(context, false, 0, Constantes.INSERT_URL_TURNO);
-            //SyncAdapter.sincronizarAhora(context, true, 0, Constantes.UPDATE_URL_TURNO);  descomentar en online
-        }
     }
 
     public static void actualizarTurno(Context context) {
@@ -209,9 +200,6 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
         values2.put("hora_fin", formattedDate);
         values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.update("turnos", values2, "idRemota='" + id_empleado + "' and hora_fin IS NULL", null);
-        if(Empleados.online.isChecked()){
-            SyncAdapter.sincronizarAhora(context, false, 0, Constantes.INSERT_URL_TURNO);
-            //SyncAdapter.sincronizarAhora(context, true, 0, Constantes.UPDATE_URL_TURNO);  descomentar en online
-        }
+
     }
 }

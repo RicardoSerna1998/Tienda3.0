@@ -1,29 +1,18 @@
 package com.example.ricardosernam.tienda;
 
-import android.content.ClipData;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ricardosernam.tienda.Empleados.Empleados;
-import com.example.ricardosernam.tienda._____interfazes.actualizado;
 import com.example.ricardosernam.tienda.provider.ContractParaProductos;
 import com.example.ricardosernam.tienda.ventas.Ventas;
-import com.example.ricardosernam.tienda.sync.SyncAdapter;
-import com.example.ricardosernam.tienda.utils.Constantes;
-
-import static android.widget.Toast.LENGTH_LONG;
-import static com.example.ricardosernam.tienda.Empleados.Empleados.ip;
 
 public class MainActivity extends AppCompatActivity  {
     public static TextView empleadoActivo;
@@ -78,17 +67,6 @@ public class MainActivity extends AppCompatActivity  {
                 if(getSupportFragmentManager().findFragmentByTag("Empleados").isVisible()){  //estoy en empleados
                     getSupportFragmentManager().beginTransaction().replace(R.id.LLprincipal, new Ventas(activos.getString(0)), "Ventas").addToBackStack("Ventas").commit(); ///cambio de fragment
 
-                    estado=db.rawQuery("select ip, online from estados" ,null);
-
-                    ///guardamo el estado de la pantalla
-                    values.put(ContractParaProductos.Columnas.IP,  String.valueOf(ip.getText()));
-                    if(estado.moveToFirst()){
-                        db.update("estados", values, null, null);
-                    }
-                    else{
-                        db.insertOrThrow("estados", null, values);
-                    }
-                    new Constantes("http://" + String.valueOf(ip.getText()));
                     //item.setIcon(ContextCompat.getDrawable(this, R.mipmap.ic_supervisor_account_black_24dp));
                 }
                 else{  ///no estoy en empleados

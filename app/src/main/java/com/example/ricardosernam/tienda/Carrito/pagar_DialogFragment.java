@@ -25,12 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ricardosernam.tienda.DatabaseHelper;
-import com.example.ricardosernam.tienda.Empleados.Empleados;
 import com.example.ricardosernam.tienda.MainActivity;
 import com.example.ricardosernam.tienda.provider.ContractParaProductos;
 import com.example.ricardosernam.tienda.R;
-import com.example.ricardosernam.tienda.sync.SyncAdapter;
-import com.example.ricardosernam.tienda.utils.Constantes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.UUID;
 
-import static android.widget.Toast.LENGTH_LONG;
 import static com.example.ricardosernam.tienda.Carrito.Carrito.aceptar_cancelar;
 
 @SuppressLint("ValidFragment")
@@ -225,8 +221,6 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
         values.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.insertOrThrow("ventas", null, values);
         Log.i("Venta", String.valueOf(values));    ////mostramos que valores se han insertado
-        com.example.ricardosernam.tienda.Empleados.Empleados.datosAsincronizar();
-
 
 /////////////////////////////////incersion-modificación ventas-inventario_detalles
         values2 = new ContentValues();
@@ -256,11 +250,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
                 Log.i("Inventario", String.valueOf(values3));    ////mostramos que valores se han insertado
             }
         }
-        //DESCOMENTAR MODO ONLINE
-        if(Empleados.online.isChecked()){
-            SyncAdapter.sincronizarAhora(getContext(), false, 0, Constantes.INSERT_URL_TURNO);
-            //SyncAdapter.sincronizarAhora(getContext(), true,0, Constantes.UPDATE_URL_INVENTARIO);   ///actualizamos el inventario disponible a cero
-        }
+
 
         dismiss();
         Toast.makeText(getContext(), "Venta exitosa", Toast.LENGTH_LONG).show();
