@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static void productos(SQLiteDatabase database) {
         String cmd2 = "CREATE TABLE " + ContractParaProductos.INFORMACION + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractParaProductos.Columnas.ID_REMOTA + " INT," +
                 ContractParaProductos.Columnas.NOMBRE_NEGOCIO + " TEXT, " +
                 ContractParaProductos.Columnas.DIRECCION + " VARCHAR(45), " +
                 ContractParaProductos.Columnas.TELEFONO + " VARCHAR(45)," +
@@ -37,7 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String cmd0 = "CREATE TABLE " + ContractParaProductos.EMPLEADOS + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractParaProductos.Columnas.ID_REMOTA + " INT," +
                 ContractParaProductos.Columnas.DISPONIBLE+ " INT," +
                 ContractParaProductos.Columnas.NOMBRE_EMPLEADO + " TEXT, " +
                 ContractParaProductos.Columnas.TIPO_EMPLEADO + " TEXT, " +
@@ -49,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String cmd6 = "CREATE TABLE " + ContractParaProductos.TURNOS + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractParaProductos.Columnas.ID_REMOTA + " INT," +
+                ContractParaProductos.Columnas.ID_EMPLEADO + " INT," +
                 ContractParaProductos.Columnas.HORA_INICIO + " TEXT, " +
                 ContractParaProductos.Columnas.HORA_FIN + " TEXT, " +
                 ContractParaProductos.Columnas.ESTADO + " INTEGER NOT NULL DEFAULT "+ ContractParaProductos.ESTADO_OK+"," +
@@ -58,28 +56,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String cmd = "CREATE TABLE " + ContractParaProductos.INVENTARIO + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractParaProductos.Columnas.ID_REMOTA + " INT," +
                 ContractParaProductos.Columnas.DISPONIBLE+ " INT," +
                 ContractParaProductos.Columnas.NOMBRE_PRODUCTO + " VARCHAR(45), " +
                 ContractParaProductos.Columnas.PRECIO + " DOUBLE, " +
                 ContractParaProductos.Columnas.CODIGO_BARRAS + " VARCHAR(45), " +
-                ContractParaProductos.Columnas.EXISTENTES + " DOUBLE," +
                 ContractParaProductos.Columnas.EXISTENTES2 + " DOUBLE," +
                 ContractParaProductos.Columnas.ESTADO + " INTEGER NOT NULL DEFAULT "+ ContractParaProductos.ESTADO_OK+"," +
                 ContractParaProductos.Columnas.PENDIENTE_INSERCION + " INTEGER NOT NULL DEFAULT 0)";
         database.execSQL(cmd);
-
-        database.execSQL("INSERT INTO inventario (idRemota, disponible, nombre_producto, precio, codigo_barras, existente) values (1, 1, 'Jitomate', 15.0, 'null', 3000)");
-        database.execSQL("INSERT INTO inventario (idRemota, disponible, nombre_producto, precio, codigo_barras, existente) values (2, 1,'Coca', 10.0 , '7501055354672', 20)");
-        database.execSQL("INSERT INTO inventario (idRemota, disponible, nombre_producto, precio, codigo_barras, existente) values (3, 0, 'Cebolla', 15.0, 'null', 3000)");
-        database.execSQL("INSERT INTO inventario (idRemota, disponible, nombre_producto, precio, codigo_barras, existente) values (4, 1, 'Trojan', 60.0 , '022600972525', 30)");
-
-        database.execSQL("INSERT INTO empleados (idRemota, codigo, nombre_empleado, tipo_empleado, activo, disponible) values (1,'juan', 'Juan', 'Cajero', 0, 1)");
-        database.execSQL("INSERT INTO empleados (idRemota, codigo, nombre_empleado, tipo_empleado, activo, disponible) values (2,'manuel', 'Manuel', 'Admin.', 0, 1)");
-        database.execSQL("INSERT INTO empleados (idRemota, codigo, nombre_empleado, tipo_empleado, activo, disponible) values (3,'admin', 'Administrador', 'Admin.', 0, 1)");
-        database.execSQL("INSERT INTO empleados (idRemota, codigo, nombre_empleado, tipo_empleado, activo, disponible) values (4,'maria', 'María', 'Cerillo', 0, 1)");
-
-        database.execSQL("INSERT INTO informacion (nombre_negocio, direccion, telefono) values ('Punto de venta', 'México', '+52 0000000000')");
 
         String cmd4 = "CREATE TABLE " + ContractParaProductos.VENTAS + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -91,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String cmd5 = "CREATE TABLE " + ContractParaProductos.VENTA_DETALLES + " (" +
                 ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractParaProductos.Columnas.ID_REMOTA + " INT," +
+                ContractParaProductos.Columnas.ID_VENTA + " INT," +
                 ContractParaProductos.Columnas.ID_PRODUCTO+ " INT, " +
                 ContractParaProductos.Columnas.PRECIO + " DOUBLE, " +
                 ContractParaProductos.Columnas.CANTIDAD + " DOUBLE, " +
@@ -99,6 +83,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ContractParaProductos.Columnas.ESTADO + " INTEGER NOT NULL DEFAULT "+ ContractParaProductos.ESTADO_OK+"," +
                 ContractParaProductos.Columnas.PENDIENTE_INSERCION + " INTEGER NOT NULL DEFAULT 0)";
         database.execSQL(cmd5);
+
+        String cmd7 = "CREATE TABLE " + ContractParaProductos.CONFIGURACION + " (" +
+                ContractParaProductos.Columnas._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ContractParaProductos.Columnas.IMPRESORA + " TEXT, " +
+                ContractParaProductos.Columnas.ESCANER + " INTEGER, " +
+                ContractParaProductos.Columnas.COLUMNAS + " INTEGER)";
+        database.execSQL(cmd7);
+
+        database.execSQL("INSERT INTO inventario (disponible, nombre_producto, precio, codigo_barras, existente2) values (1, 'Jitomate', 15.0, 'null', 3000)");
+        database.execSQL("INSERT INTO inventario (disponible, nombre_producto, precio, codigo_barras, existente2) values (1,'Coca', 10.0 , '7501055354672', 20)");
+        database.execSQL("INSERT INTO inventario (disponible, nombre_producto, precio, codigo_barras, existente2) values (0, 'Cebolla', 15.0, 'null', 3000)");
+        database.execSQL("INSERT INTO inventario (disponible, nombre_producto, precio, codigo_barras, existente2) values (1, 'Trojan', 60.0 , '022600972525', 30)");
+
+        database.execSQL("INSERT INTO empleados (codigo, nombre_empleado, tipo_empleado, activo, disponible) values ('juan', 'Juan', 'Cajero', 0, 1)");
+        database.execSQL("INSERT INTO empleados (codigo, nombre_empleado, tipo_empleado, activo, disponible) values ('manuel', 'Manuel', 'Admin.', 0, 1)");
+        database.execSQL("INSERT INTO empleados (codigo, nombre_empleado, tipo_empleado, activo, disponible) values ('admin', 'Administrador', 'Admin.', 0, 1)");
+        database.execSQL("INSERT INTO empleados (codigo, nombre_empleado, tipo_empleado, activo, disponible) values ('maria', 'María', 'Cerillo', 0, 1)");
+
+        database.execSQL("INSERT INTO informacion (nombre_negocio, direccion, telefono) values ('Punto de venta', 'México', '+52 0000000000')");
+        database.execSQL("INSERT INTO configuracion (impresora, escaner, columnas) values ('00001101-0000-1000-8000-00805f9b34fb', 1, 3)");
     }
 
     //@Override

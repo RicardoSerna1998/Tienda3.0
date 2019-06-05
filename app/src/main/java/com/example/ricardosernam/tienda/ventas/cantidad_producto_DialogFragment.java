@@ -191,7 +191,7 @@ public class cantidad_producto_DialogFragment extends android.support.v4.app.Dia
             @Override
             public void onClick(View view) {
                 if(validar()){   /////si  ya se pago todo bien
-                    productoElegido= db.rawQuery("select idRemota from inventario where nombre_producto='"+producto+"'", null);
+                    productoElegido= db.rawQuery("select _id from inventario where nombre_producto='"+producto+"'", null);
                     if(productoElegido.moveToFirst()){
                         repetido(producto);
                         ContractParaProductos.itemsProductosVenta.add(new ProductosVenta_class(producto, Float.parseFloat(cantidad.getText().toString()),precio, tipo, Float.parseFloat(subtotal.getText().toString()) , productoElegido.getInt(0)));

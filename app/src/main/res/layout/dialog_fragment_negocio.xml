@@ -33,12 +33,13 @@
             android:textSize="20dp" />
 
     </LinearLayout>
+
     <TextView
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Contraseña"
+        android:layout_marginTop="10dp"
+        android:text="Dirección"
         android:textSize="20dp" />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -57,12 +58,13 @@
             android:inputType="text|textCapSentences"
             android:textSize="20dp" />
     </LinearLayout>
+
     <TextView
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Puesto"
+        android:layout_marginTop="10dp"
+        android:text="Teléfono"
         android:textSize="20dp" />
     <LinearLayout
         android:layout_width="wrap_content"

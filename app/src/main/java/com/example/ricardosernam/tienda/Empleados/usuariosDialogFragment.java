@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ricardosernam.tienda.Configuracion.configuracion_DialogFragment;
 import com.example.ricardosernam.tienda.DatabaseHelper;
 import com.example.ricardosernam.tienda.MainActivity;
 import com.example.ricardosernam.tienda._____interfazes.actualizado;
@@ -139,6 +140,10 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
                             getDialog().dismiss();
                             new negocio_DialogFragment().show(fm, "Modificar_Info");
                         }
+                        else if (sesion.equals("Configuracion")) {   ////Datos del negocio
+                            getDialog().dismiss();
+                            new configuracion_DialogFragment().show(fm, "Modificar_Info");
+                        }
                         else if (sesion.equals("Eliminar")) {   ///Eliminar emppleado
                             getDialog().dismiss();
                             final AlertDialog.Builder aceptarVenta = new AlertDialog.Builder(getContext());
@@ -180,10 +185,10 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
     }
 
     public static void insertarTurno(Context context) {
-        Cursor empleado = db.rawQuery("select idRemota from empleados where nombre_empleado='" + usuario + "'", null);
+        Cursor empleado = db.rawQuery("select _id from empleados where nombre_empleado='" + usuario + "'", null);
 
         if (empleado.moveToFirst()) {
-            values2.put("idRemota", empleado.getString(0));
+            values2.put("id_empleado", empleado.getString(0));
         }
         values2.put("hora_inicio", formattedDate);
         values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
@@ -192,14 +197,14 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
 
     public static void actualizarTurno(Context context) {
        String id_empleado = null;
-        Cursor empleado = db.rawQuery("select idRemota from empleados where nombre_empleado='" + usuario + "'", null);
+        Cursor empleado = db.rawQuery("select _id from empleados where nombre_empleado='" + usuario + "'", null);
 
         if (empleado.moveToFirst()) {
             id_empleado=empleado.getString(0);
         }
         values2.put("hora_fin", formattedDate);
         values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
-        db.update("turnos", values2, "idRemota='" + id_empleado + "' and hora_fin IS NULL", null);
+        db.update("turnos", values2, "id_empleado='" + id_empleado + "' and hora_fin IS NULL", null);
 
     }
 }

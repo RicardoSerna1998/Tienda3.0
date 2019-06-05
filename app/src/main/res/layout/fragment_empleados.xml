@@ -38,6 +38,14 @@
                 android:layout_gravity="left"
                 android:drawableTop="@mipmap/ic_border_color_black_24dp"
                 android:text="Editar" />
+
+            <Button
+                android:id="@+id/BtnConfiguracion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:drawableTop="@mipmap/ic_settings_black_24dp"
+                android:text="Config." />
         </LinearLayout>
 
         <LinearLayout

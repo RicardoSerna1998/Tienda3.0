@@ -65,7 +65,7 @@ public class Historial extends Fragment {
 
         if(fila.moveToFirst()) {///si hay un elemento
 
-            filaEmpleado=db.rawQuery("select nombre_empleado from empleados where idRemota='"+fila.getInt(0)+"'" ,null);
+            filaEmpleado=db.rawQuery("select nombre_empleado from empleados where _id='"+fila.getInt(0)+"'" ,null);
 
             if(filaEmpleado.moveToFirst()) {///si hay un elemento
                 itemsHistorial.add(new Historial_class(filaEmpleado.getString(0), fila.getString(1), fila.getInt(2)));
@@ -73,7 +73,7 @@ public class Historial extends Fragment {
             }
 
             while (fila.moveToNext()) {
-                filaEmpleado=db.rawQuery("select nombre_empleado from empleados where idRemota='"+fila.getInt(0)+"'" ,null);
+                filaEmpleado=db.rawQuery("select nombre_empleado from empleados where _id='"+fila.getInt(0)+"'" ,null);
                 while (filaEmpleado.moveToNext()) {
                     itemsHistorial.add(new Historial_class(filaEmpleado.getString(0), fila.getString(1), fila.getInt(2)));
                     //rellenado_items(fila.getInt(2));
@@ -89,10 +89,10 @@ public class Historial extends Fragment {
 
     public static void rellenado_items(int idVenta, RecyclerView recycler, Context context){  ////volvemos a llenar el racycler despues de actualizar, o de una busqueda
         itemsProductosHistorial.clear();
-        fila2=db.rawQuery("select id_producto, cantidad, precio from venta_detalles where local=1 and idRemota='"+idVenta+"'" ,null);
+        fila2=db.rawQuery("select id_producto, cantidad, precio from venta_detalles where local=1 and id_venta='"+idVenta+"'" ,null);
 
         if(fila2.moveToFirst()) {///si hay un elemento
-            filaProducto=db.rawQuery("select nombre_producto, codigo_barras from inventario where idRemota='"+fila2.getInt(0)+"'" ,null);
+            filaProducto=db.rawQuery("select nombre_producto, codigo_barras from inventario where _id='"+fila2.getInt(0)+"'" ,null);
             if(filaProducto.moveToFirst()) {///si hay un elemento}
                 if(filaProducto.getString(1).equals("null")){   ///gramos
                     float subtotal=(fila2.getFloat(1)/1000)* fila2.getFloat(2);
@@ -106,7 +106,7 @@ public class Historial extends Fragment {
                 }
         }
             while (fila2.moveToNext()) {
-                filaProducto=db.rawQuery("select nombre_producto, codigo_barras from inventario where idRemota='"+fila2.getInt(0)+"'" ,null);
+                filaProducto=db.rawQuery("select nombre_producto, codigo_barras from inventario where _id='"+fila2.getInt(0)+"'" ,null);
                 while (filaProducto.moveToNext()) {
                     if(filaProducto.getString(1).equals("null")){   ///gramos
                         float subtotal=(fila2.getFloat(1)/1000)* fila2.getFloat(2);

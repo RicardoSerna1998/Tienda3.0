@@ -47,19 +47,20 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
+import static android.view.View.GONE;
 import static android.widget.Toast.LENGTH_LONG;
 
 @SuppressLint("ValidFragment")
 public class Ventas extends Fragment implements KeyListener {
     private SearchView nombreCodigo;
-    private static Cursor fila, filaBusqueda, datoEscaneado, ventas, existentes, filaProducto, productoElegido;
+    private static Cursor fila, filaBusqueda, datoEscaneado, ventas, existentes, filaProducto, productoElegido, config, codigo;
     private static SQLiteDatabase db;
     private static TextView productos;
     private static RecyclerView recycler;
     private static RecyclerView.Adapter adapter;
     private static android.support.v4.app.FragmentManager fm;
     private static RecyclerView.LayoutManager lManager;
-    private Button carrito, historial, imprimir, nuevo;
+    private static Button carrito, historial, imprimir, nuevo, escanear;
     private android.support.v7.app.ActionBar actionBar;
     public static ContentValues values = new ContentValues();
     public String tipo_empleado;
@@ -104,6 +105,7 @@ public class Ventas extends Fragment implements KeyListener {
         actionBar=((AppCompatActivity)getActivity()).getSupportActionBar();
         nombreCodigo=view.findViewById(R.id.ETnombreProducto);
         imprimir= view.findViewById(R.id.BtnImprimriInventario);
+        escanear= view.findViewById(R.id.BtnescanearProducto);
         nuevo= view.findViewById(R.id.BtnAgregarProducto);
 
         productos= view.findViewById(R.id.TVproductos);
@@ -113,8 +115,8 @@ public class Ventas extends Fragment implements KeyListener {
 
         //tipo_empleado='Admin.' and activo=1 or tipo_empleado='Cajero'
         if(!tipo_empleado.equals("Admin.")){ //no tiene permisos
-           imprimir.setVisibility(View.GONE); ///////ocultar boton de nuevo, imprimir, editar y eliminar producto
-           nuevo.setVisibility(View.GONE);
+           imprimir.setVisibility(GONE); ///////ocultar boton de nuevo, imprimir, editar y eliminar producto
+           nuevo.setVisibility(GONE);
            permisos=0;
         }
         else{  ///tiene permisos
@@ -213,6 +215,7 @@ public class Ventas extends Fragment implements KeyListener {
         rellenado_total(getContext());
         return view;
     }
+    @SuppressLint({"Recycle", "SetTextI18n"})
     public static void numero_productos(Context context) {
         existentes = db.rawQuery("select * from inventario where disponible=1", null);
         if (existentes.moveToFirst()) {
@@ -231,7 +234,8 @@ public class Ventas extends Fragment implements KeyListener {
     }
     public static void rellenado_total(Context context){  ////volvemos a llenar el racycler despues de actualizar, o de una busqueda
        numero_productos(context);
-        fila=db.rawQuery("select nombre_producto, precio, codigo_barras, existente from inventario where disponible=1 order by codigo_barras" ,null);
+        fila=db.rawQuery("select nombre_producto, precio, codigo_barras, existente2 from inventario where disponible=1 order by codigo_barras" ,null);
+        config=db.rawQuery("select escaner, columnas from configuracion" ,null);
 
         if(fila.moveToFirst()) {///si hay un elemento
             itemsProductos.clear();
@@ -242,7 +246,15 @@ public class Ventas extends Fragment implements KeyListener {
         }
         adapter = new VentasAdapter(itemsProductos, fm, context, permisos);///llamamos al adaptador y le enviamos el array como parametro
         //lManager = new LinearLayoutManager(this.getActivity());  //declaramos el layoutmanager
-        lManager = new GridLayoutManager(context, 3);  //declaramos el layoutmanager
+        if(config.moveToFirst()) {
+            lManager = new GridLayoutManager(context, config.getInt(1));  //declaramos el layoutmanager
+            if (config.getInt(0)==0) {  ///No se puede ESCANEAR
+                escanear.setVisibility(GONE);
+            }
+            else{
+                escanear.setVisibility(View.VISIBLE);
+            }
+        }
         recycler.setLayoutManager(lManager);
         recycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -333,7 +345,11 @@ public class Ventas extends Fragment implements KeyListener {
     void openBT() throws IOException {
         try {
             // Standard SerialPortService ID
-            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+            codigo= db.rawQuery("select impresora from configuracion", null);
+            UUID uuid = null;
+            if(codigo.moveToFirst()){
+                uuid = UUID.fromString(codigo.getString(0));   ////36 dígitos
+            }
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
             mmSocket.connect();
             mmOutputStream = mmSocket.getOutputStream();

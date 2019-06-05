@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/baseline_add_circle_outline_black_24"
             android:text=" Nuevo "
-            android:textSize="18dp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/BtnImprimriInventario"
@@ -25,7 +25,15 @@
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/baseline_print_black_24"
             android:text="Imprimir"
-            android:textSize="18dp" />
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/BtnescanearProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/baseline_fullscreen_black_24"
+            android:text="Escanear"
+            android:textSize="14sp" />
 
         <android.support.v7.widget.SearchView
             android:id="@+id/ETnombreProducto"
@@ -34,20 +42,22 @@
             android:layout_weight="1"
             android:hint="Ingresa el nombre o código"
             android:inputType="text" />
+
         <Button
             android:id="@+id/BtnHistorial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/ic_history_black_24dp"
             android:text=" Historial "
-            android:textSize="18dp" />
+            android:textSize="14sp" />
+
         <Button
             android:id="@+id/BtnCarrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/ic_shopping_cart_black_24dp"
             android:text=" Carrito "
-            android:textSize="18dp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -56,7 +66,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Productos"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

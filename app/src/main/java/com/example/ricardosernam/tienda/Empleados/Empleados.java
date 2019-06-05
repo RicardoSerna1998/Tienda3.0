@@ -20,7 +20,7 @@ import com.example.ricardosernam.tienda.R;
 import java.util.ArrayList;
 
 public class Empleados extends Fragment {     /////Fragment de categoria ventas
-    public static Cursor empleados, informacion, estado, empleadosActivos, ipMode, onlineMode, datosAun, empleadoElegido, existentes;
+    public static Cursor empleados, informacion, estado, empleadosActivos, ipMode, onlineMode, datosAun, empleadoElegido;
     public static RecyclerView recycler;
     public static RecyclerView.Adapter adapter;
     public static RecyclerView.LayoutManager lManager;
@@ -28,7 +28,7 @@ public class Empleados extends Fragment {     /////Fragment de categoria ventas
     public static SQLiteDatabase db;
     public static TextView nombre;
     public static Button imprimir;
-    public static Button  nuevo, editarInfo;
+    public static Button  nuevo, editarInfo, configuracion;
     public static ContentValues values=new ContentValues();
     private static ArrayList<Empleados_class> itemsEmpleados = new ArrayList<>();  ///Arraylist que contiene los cardviews seleccionados de productos
 
@@ -45,6 +45,8 @@ public class Empleados extends Fragment {     /////Fragment de categoria ventas
 
         nuevo = view.findViewById(R.id.BtnAgregarEmpleado);
         editarInfo = view.findViewById(R.id.BtnmodificarInfo);
+        configuracion = view.findViewById(R.id.BtnConfiguracion);
+
         recycler = view.findViewById(R.id.RVempleados); ///declaramos el recycler
 
         DatabaseHelper admin = new DatabaseHelper(getContext(), ContractParaProductos.DATABASE_NAME, null, ContractParaProductos.DATABASE_VERSION);
@@ -64,6 +66,13 @@ public class Empleados extends Fragment {     /////Fragment de categoria ventas
 
             }
         });
+        configuracion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new usuariosDialogFragment("Administrador", "Configuracion").show(fm, "Empleados");
+            }
+        });
+
         relleno(getContext());
         return view;
     }

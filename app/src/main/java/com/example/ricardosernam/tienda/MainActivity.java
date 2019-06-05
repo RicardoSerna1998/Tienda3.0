@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.ricardosernam.tienda.Configuracion.configuracion_DialogFragment;
 import com.example.ricardosernam.tienda.Empleados.Empleados;
+import com.example.ricardosernam.tienda.Empleados.usuariosDialogFragment;
 import com.example.ricardosernam.tienda.provider.ContractParaProductos;
 import com.example.ricardosernam.tienda.ventas.Ventas;
 
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity  {
             bar.setDisplayHomeAsUpEnabled(false);
             return true;
         }
+
             return super.onOptionsItemSelected(item);
     }
 

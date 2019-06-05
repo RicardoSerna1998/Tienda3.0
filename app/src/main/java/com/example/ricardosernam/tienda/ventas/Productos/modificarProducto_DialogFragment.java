@@ -108,7 +108,7 @@ public class modificarProducto_DialogFragment extends android.support.v4.app.Dia
             @Override
             public void onClick(View view) {
                 if(validar()){   /////si  ya se pago todo bien
-                    productoElegido= db.rawQuery("select _id, existente from inventario where nombre_producto='"+producto+"'", null);
+                    productoElegido= db.rawQuery("select _id from inventario where nombre_producto='"+producto+"'", null);
                     if(productoElegido.moveToFirst()){
                         values.put("precio", Float.parseFloat(precioNuevo.getText().toString()));
                         values.put("existente2", Float.parseFloat(existente.getText().toString()));

@@ -84,18 +84,17 @@ public class nuevoProducto_DialogFragment extends android.support.v4.app.DialogF
                         values.put("disponible", 1);
                         values.put("nombre_producto", nombre.getText().toString());
                         values.put("precio", Float.parseFloat(precioNuevo.getText().toString()));
-                        values.put("existente", Float.parseFloat(existente.getText().toString()));
                         values.put("existente2", Float.parseFloat(existente.getText().toString()));
 
-                    if(((TextUtils.isEmpty(codigo.getText())))) {  /// es vacio
+                    if(((TextUtils.isEmpty(codigo.getText().toString().trim())))) {  /// es vacio
                         values.put("codigo_barras", "null");
-                    }
-                    {
+
+                    } else{
                         values.put("codigo_barras", existente.getText().toString());
+
                     }
 
-
-                        db.insertOrThrow("inventario", null, values);
+                    db.insertOrThrow("inventario", null, values);
                         Ventas.rellenado_total(getContext());
 
                         dismiss();

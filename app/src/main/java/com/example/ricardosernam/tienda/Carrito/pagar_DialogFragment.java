@@ -44,7 +44,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
     private Button aceptar,cancelar, sumar, restar;
     private SQLiteDatabase db;
     private android.support.v4.app.FragmentManager fm;
-    private Cursor empleado, venta, existente, informacion, filaProducto;
+    private Cursor empleado, venta, existente, informacion, filaProducto, codigo;
     private ContentValues values, values2, values3;
     private TextView total,cambio, deuda, abono;
     private EditText cantidad;
@@ -211,7 +211,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String formattedDate = df.format(c.getTime());
 
-        empleado= db.rawQuery("select idRemota from empleados where tipo_empleado='Admin.' and activo=1 or tipo_empleado='Cajero' and activo=1", null);
+        empleado= db.rawQuery("select _id from empleados where tipo_empleado='Admin.' and activo=1 or tipo_empleado='Cajero' and activo=1", null);
 
         if (empleado.moveToFirst()) {
             values.put("id_empleado", empleado.getString(0));
@@ -230,7 +230,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
             ////////////////venta detalles/////////////////////////////77
             if (venta.moveToFirst()) {
                 venta.moveToLast();
-                values2.put("idRemota", venta.getString(0));
+                values2.put("id_venta", venta.getString(0));
                 values2.put("id_producto", ContractParaProductos.itemsProductosVenta.get(i).getIdRemota());
                 values2.put("cantidad", ContractParaProductos.itemsProductosVenta.get(i).getCantidad());
                 values2.put("precio",ContractParaProductos.itemsProductosVenta.get(i).getPrecio());
@@ -246,7 +246,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
             if (existente.moveToFirst()) {
                 float porcion = existente.getFloat(0) - (ContractParaProductos.itemsProductosVenta.get(i).getCantidad());
                 values3.put("existente2", porcion);
-                db.update("inventario", values3, "idRemota='" + ContractParaProductos.itemsProductosVenta.get(i).getIdRemota() + "'", null);
+                db.update("inventario", values3, "_id='" + ContractParaProductos.itemsProductosVenta.get(i).getIdRemota() + "'", null);
                 Log.i("Inventario", String.valueOf(values3));    ////mostramos que valores se han insertado
             }
         }
@@ -305,7 +305,11 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
     void openBT() throws IOException {
         try {
             // Standard SerialPortService ID
-            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+            codigo= db.rawQuery("select impresora from configuracion", null);
+            UUID uuid = null;
+            if(codigo.moveToFirst()){
+                uuid = UUID.fromString(codigo.getString(0));   ////36 dígitos
+            }
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
             mmSocket.connect();
             mmOutputStream = mmSocket.getOutputStream();
@@ -448,7 +452,7 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
             for (int i = 0; i < ContractParaProductos.itemsProductosVenta.size(); i++) {
                 ////////////////venta detalles/////////////////////////////
                 String nombreProducto=null;
-                filaProducto=db.rawQuery("select nombre_producto from inventario where idRemota='"+ContractParaProductos.itemsProductosVenta.get(i).getIdRemota()+"'" ,null);
+                filaProducto=db.rawQuery("select nombre_producto from inventario where _id='"+ContractParaProductos.itemsProductosVenta.get(i).getIdRemota()+"'" ,null);
                 if(filaProducto.moveToFirst()) {///si hay un elemento}
                     nombreProducto=filaProducto.getString(0);
                     nombreProducto += "\n";

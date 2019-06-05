@@ -37,7 +37,7 @@ public class ContractParaProductos {
 
     public static final String TURNOS = "turnos";
 
-    public static final String ESTADOS= "estados";
+    public static final String CONFIGURACION= "configuracion";
 
 
 final static String SINGLE_MIME_EMPLEADO = "vnd.android.cursor.item/vnd." + AUTHORITY + EMPLEADOS;
@@ -166,6 +166,8 @@ public static class Columnas implements BaseColumns {
 
     /////////////////////venta detalles///////////////////7
     public final static String CANTIDAD = "cantidad";
+    public final static String ID_VENTA = "id_venta";
+
 
 
     /////////////////inventario
@@ -188,8 +190,11 @@ public static class Columnas implements BaseColumns {
     public final static String HORA_INICIO = "hora_inicio";
     public final static String HORA_FIN = "hora_fin";
 
-    public final static String IP = "ip";
-    public final static String ONLINE = "online";
+  ///////////////////// CONFIGURACIÓN
+  ////////////////////informacion////////////
+  public final static String IMPRESORA= "impresora";
+    public final static String ESCANER = "escaner";
+    public final static String COLUMNAS = "columnas";
 
     public static final String ESTADO = "estado";
     public static final String ID_REMOTA = "idRemota";
