@@ -20,7 +20,7 @@ import com.example.ricardosernam.tienda.R;
 import java.util.ArrayList;
 
 public class Empleados extends Fragment {     /////Fragment de categoria ventas
-    public static Cursor empleados, informacion, estado, empleadosActivos, ipMode, onlineMode, datosAun, empleadoElegido;
+    public static Cursor empleados, informacion, empleadoElegido;
     public static RecyclerView recycler;
     public static RecyclerView.Adapter adapter;
     public static RecyclerView.LayoutManager lManager;

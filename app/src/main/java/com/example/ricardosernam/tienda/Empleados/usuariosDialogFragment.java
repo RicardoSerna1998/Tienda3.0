@@ -191,7 +191,6 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
             values2.put("id_empleado", empleado.getString(0));
         }
         values2.put("hora_inicio", formattedDate);
-        values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.insertOrThrow("turnos", null, values2);
     }
 
@@ -203,7 +202,6 @@ public class usuariosDialogFragment extends android.support.v4.app.DialogFragmen
             id_empleado=empleado.getString(0);
         }
         values2.put("hora_fin", formattedDate);
-        values2.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.update("turnos", values2, "id_empleado='" + id_empleado + "' and hora_fin IS NULL", null);
 
     }

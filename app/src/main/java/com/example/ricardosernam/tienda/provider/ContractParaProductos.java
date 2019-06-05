@@ -197,7 +197,6 @@ public static class Columnas implements BaseColumns {
     public final static String COLUMNAS = "columnas";
 
     public static final String ESTADO = "estado";
-    public static final String ID_REMOTA = "idRemota";
     public final static String PENDIENTE_INSERCION = "pendiente_insercion";
 
 }

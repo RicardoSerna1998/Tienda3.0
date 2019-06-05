@@ -218,7 +218,6 @@ public class pagar_DialogFragment extends android.support.v4.app.DialogFragment 
         }
 
         values.put("fecha", formattedDate);
-        values.put(ContractParaProductos.Columnas.PENDIENTE_INSERCION, 1);
         db.insertOrThrow("ventas", null, values);
         Log.i("Venta", String.valueOf(values));    ////mostramos que valores se han insertado
 
